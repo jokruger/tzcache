@@ -17,7 +17,7 @@ func New() *TzCache {
 	}
 }
 
-// Get retrieves the time.Location for the given timezone name from the cache.
+// Get retrieves the time.Location for the given timezone name from the cache or loads it if not present. Returns error if the timezone cannot be loaded.
 func (c *TzCache) Get(name string) (*time.Location, error) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
@@ -34,6 +34,15 @@ func (c *TzCache) Get(name string) (*time.Location, error) {
 	c.cache[name] = loc
 
 	return loc, nil
+}
+
+// MustGet retrieves the time.Location for the given timezone name from the cache or loads it if not present. It panics if the timezone cannot be loaded.
+func (c *TzCache) MustGet(name string) *time.Location {
+	loc, err := c.Get(name)
+	if err != nil {
+		panic(err)
+	}
+	return loc
 }
 
 // Clear removes all entries from the cache.
