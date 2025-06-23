@@ -5,14 +5,33 @@ import (
 	"time"
 )
 
+type locker interface {
+	Lock()
+	Unlock()
+}
+
+type nolock struct{}
+
+func (nolock) Lock()   {}
+func (nolock) Unlock() {}
+
 type TzCache struct {
-	lock  sync.Mutex
+	lock  locker
 	cache map[string]*time.Location
 }
 
-// New creates a new TzCache instance.
+// New creates a new thread safe TzCache instance.
 func New() *TzCache {
 	return &TzCache{
+		lock:  &sync.Mutex{},
+		cache: make(map[string]*time.Location),
+	}
+}
+
+// NewUnsafe creates a new thread unsafe TzCache instance (without locking). This is should only be used in single-threaded contexts.
+func NewUnsafe() *TzCache {
+	return &TzCache{
+		lock:  nolock{},
 		cache: make(map[string]*time.Location),
 	}
 }

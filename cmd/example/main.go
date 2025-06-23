@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	tzc := tzcache.New()
+	tzc := tzcache.NewUnsafe()
 	l1, err := tzc.Get("UTC")
 	if err != nil {
 		panic(err)
