@@ -6,11 +6,11 @@ import (
 
 // TzCache is an interface for a time zone cache.
 type TzCache interface {
-	// Get retrieves the time.Location for the given timezone name from the cache or loads it if not present. Returns error if the timezone cannot be loaded.
-	Get(name string) (*time.Location, error)
+	// Location retrieves the time.Location for the given timezone name from the cache or loads it if not present. Returns error if the timezone cannot be loaded.
+	Location(name string) (*time.Location, error)
 
-	// MustGet retrieves the time.Location for the given timezone name from the cache or loads it if not present. It panics if the timezone cannot be loaded.
-	MustGet(name string) *time.Location
+	// MustLocation retrieves the time.Location for the given timezone name from the cache or loads it if not present. It panics if the timezone cannot be loaded.
+	MustLocation(name string) *time.Location
 
 	// Delete removes a specific timezone from the cache.
 	Delete(name string)

@@ -8,7 +8,7 @@ type TzCacheUnsafe struct {
 	cache map[string]*time.Location
 }
 
-func (c *TzCacheUnsafe) Get(name string) (*time.Location, error) {
+func (c *TzCacheUnsafe) Location(name string) (*time.Location, error) {
 	if loc, ok := c.cache[name]; ok {
 		return loc, nil
 	}
@@ -23,8 +23,8 @@ func (c *TzCacheUnsafe) Get(name string) (*time.Location, error) {
 	return loc, nil
 }
 
-func (c *TzCacheUnsafe) MustGet(name string) *time.Location {
-	loc, err := c.Get(name)
+func (c *TzCacheUnsafe) MustLocation(name string) *time.Location {
+	loc, err := c.Location(name)
 	if err != nil {
 		panic(err)
 	}

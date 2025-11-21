@@ -6,11 +6,11 @@ import (
 
 func main() {
 	tzc := tzcache.NewSafe()
-	l1, err := tzc.Get("UTC")
+	l1, err := tzc.Location("UTC")
 	if err != nil {
 		panic(err)
 	}
-	l2, err := tzc.Get("Europe/Kyiv")
+	l2, err := tzc.Location("Europe/Kyiv")
 	if err != nil {
 		panic(err)
 	}
